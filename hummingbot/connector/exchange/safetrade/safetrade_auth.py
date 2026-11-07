@@ -1,7 +1,9 @@
-import hmac
 import hashlib
+import hmac
 import time
-from typing import Any, Dict
+from typing import Dict, Any
+from urllib.parse import urlparse
+
 from hummingbot.core.web_assistant.auth import AuthBase
 from hummingbot.core.web_assistant.connections.data_types import RESTRequest, WSRequest
 
@@ -13,9 +15,10 @@ class SafetradeAuth(AuthBase):
     async def rest_authenticate(self, request: RESTRequest) -> RESTRequest:
         nonce = str(int(time.time() * 1000))
         verb = request.method.value.upper()
-        path = request.url.split(REST_URL)[-1]
         
-        # Encodage des paramètres dans l'ordre alphabétique
+        parsed_url = urlparse(request.url)
+        path = parsed_url.path
+
         payload_str = ""
         if request.params:
             payload_str = "&".join(f"{k}={request.params[k]}" for k in sorted(request.params.keys()))

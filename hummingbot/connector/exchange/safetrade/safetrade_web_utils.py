@@ -1,4 +1,4 @@
-from typing import Callable, Optional
+from typing import Optional
 from hummingbot.connector.exchange.safetrade import safetrade_constants as CONSTANTS
 from hummingbot.core.api_throttler.async_throttler import AsyncThrottler
 from hummingbot.core.web_assistant.auth import AuthBase
